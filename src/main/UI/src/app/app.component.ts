@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
-import { Observable } from 'rxjs';
+import {async, Observable} from 'rxjs';
 import {map} from "rxjs/operators";
 
 
@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
 
   private baseURL:string='http://localhost:8080';
 
+  private presentationUrl = this.baseURL + '/pres-times/';
   private messagesUrl:string = this.baseURL + '/messages/';
   private getUrl:string = this.baseURL + '/room/reservation/v1/';
   private postUrl:string = this.baseURL + '/room/reservation/v1';
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
   messages:string[] = [];
+  presentation!: Observable<String>;
 
     ngOnInit(){
       this.roomsearch= new FormGroup({
@@ -51,6 +53,9 @@ export class AppComponent implements OnInit{
       this.messages = data;
     });
 
+    this.presentation = this.httpClient.get(
+      this.presentationUrl, {responseType: "text"}
+    );
   }
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
@@ -94,7 +99,8 @@ export class AppComponent implements OnInit{
     return this.httpClient.get<string[]>(this.messagesUrl);
   }
 
-  }
+  protected readonly async = async;
+}
 
 
 

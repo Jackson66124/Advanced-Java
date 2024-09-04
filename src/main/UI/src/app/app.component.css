@@ -104,6 +104,12 @@ body {
   height: 100%;
 }
 
+.welcome-message {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
 /* line 7, ../../../components/sass/_layout.scss */
 .scene {
   position: relative;
